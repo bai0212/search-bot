@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-ChildItem -Force -Path .. | Where-Object { $_.Name -match '搜索机器人|search|bot|mod|readme' } | Select-Object Name)",
+      "PowerShell(./gradlew build --warning-mode=none 2>&1)",
+      "PowerShell(Copy-Item -Path \"build/libs/search_bot-0.1.0.jar\" -Destination \"versions/search_bot-0.1.0.jar\" -Force)",
+      "PowerShell(Copy-Item -Path \"build/libs/search_bot-0.2.0.jar\" -Destination \"versions/search_bot-0.2.0.jar\" -Force)",
+      "PowerShell(Copy-Item -Path \"build/libs/search_bot-0.1.1.jar\" -Destination \"versions/search_bot-0.1.1.jar\" -Force)",
+      "PowerShell(New-Item -ItemType Directory -Force -Path \"changelogs\")",
+      "PowerShell(Copy-Item -Path \"build/libs/search_bot-0.1.2.jar\" -Destination \"versions/search_bot-0.1.2.jar\" -Force)",
+      "PowerShell(Copy-Item -Path \"build/libs/search_bot-0.1.3.jar\" -Destination \"versions/search_bot-0.1.3.jar\" -Force)",
+      "WebFetch(domain:gitcode.csdn.net)",
+      "Read(//c/Users/10046/**)",
+      "PowerShell(.\\\\gradlew.bat syncArtTextures)",
+      "PowerShell(.\\\\gradlew.bat compileJava)",
+      "PowerShell(.\\\\gradlew.bat syncArtTextures compileJava)",
+      "PowerShell(claude config set --global permissionMode accept_all)"
+    ],
+    "additionalDirectories": [
+      "c:\\Users\\10046"
+    ]
+  }
+}

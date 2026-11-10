@@ -1,0 +1,6 @@
+﻿{
+    "textures":  {
+                     "layer0":  "search_bot:item/shield_part"
+                 },
+    "parent":  "minecraft:item/generated"
+}

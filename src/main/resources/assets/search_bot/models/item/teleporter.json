@@ -1,0 +1,6 @@
+{
+    "textures":  {
+                     "layer0":  "search_bot:item/teleporter"
+                 },
+    "parent":  "minecraft:item/generated"
+}

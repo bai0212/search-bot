@@ -1,0 +1,60 @@
+{
+  "current": "原版风",
+  "installed_at": "2026-11-08 16:34",
+  "note": "GUI 风格库。贴图属于美术，可直接 apply；TechGuiTheme.java 属于代码，默认不动 src，需要 --with-theme 或手工覆盖。",
+  "target_dir": "C:/Users/10046/Desktop/我的世界模组/搜索机器人/src/main/resources/assets/search_bot/textures/gui",
+  "theme_target": "C:/Users/10046/Desktop/我的世界模组/搜索机器人/src/main/java/com/cheng/search_bot/client/screen/TechGuiTheme.java",
+  "textures": {
+    "assembler": "robot_assembler.png",
+    "controller": "robot_controller.png",
+    "inventory": "robot_inventory.png"
+  },
+  "styles": {
+    "科技风": {
+      "label": "科技银 + 荧光蓝（自创风格，四角角标 / 分格电量条）",
+      "dir": "科技风",
+      "textures": {
+        "assembler": "robot_assembler.png",
+        "controller": "robot_controller.png",
+        "inventory": "robot_inventory.png"
+      },
+      "theme": "TechGuiTheme.java",
+      "screens": [
+        "RobotAssemblerScreen.java",
+        "RobotControllerScreen.java",
+        "RobotInventoryScreen.java"
+      ],
+      "generator": "gen_gui_textures.py",
+      "in_game": false,
+      "notes": "槽位凹格、按钮、面板框全由代码画（TechGuiTheme），贴图只烘固定部件。"
+    },
+    "原版风": {
+      "label": "原版箱子风（#C6C6C6 面板 + #8B8B8B 凹格 + 1px 黑描边，无发光装饰）",
+      "dir": "原版风",
+      "textures": {
+        "assembler": "robot_assembler.png",
+        "controller": "robot_controller.png",
+        "inventory": "robot_inventory.png"
+      },
+      "theme": "TechGuiTheme.java",
+      "generator": "gen_gui_textures_vanilla.py",
+      "mock": "mock_gui_current.py",
+      "in_game": true,
+      "notes": "贴图按 0.5.8+ 的实际代码布局烘：装配台径向轨道、背包分页栏+右侧过滤面板、操控台 8 行。凹格/按钮/文字仍由代码画（背包行数和操控台频道数会变）。改布局先改 design/gui-code-requirements.md 的坐标表，再改代码，最后重跑生成脚本并 apply。",
+      "target": "centered_target.py"
+    },
+    "精妙背包风": {
+      "label": "精妙背包风（深炭灰面板 + 平坦凹格 + 暖金描边，借鉴 Sophisticated Backpacks）",
+      "dir": "精妙背包风",
+      "textures": {
+        "assembler": "robot_assembler.png",
+        "controller": "robot_controller.png",
+        "inventory": "robot_inventory.png"
+      },
+      "theme": "TechGuiTheme.java",
+      "generator": "gen_gui_textures_backpack.py",
+      "in_game": false,
+      "notes": "借鉴精妙背包观感：深炭灰 + 平坦凹格（无斜面）+ 暖金描边。凹格仍由代码画。切风格必须加 --with-theme 一起换 TechGuiTheme.java。"
+    }
+  }
+}

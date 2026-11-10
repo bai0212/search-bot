@@ -1,0 +1,6 @@
+﻿{
+    "textures":  {
+                     "layer0":  "search_bot:item/storage_box"
+                 },
+    "parent":  "minecraft:item/generated"
+}

@@ -1,0 +1,64 @@
+{
+  "current": "01_boxuv",
+  "resource_texture": "src/main/resources/assets/search_bot/textures/entity/search_robot.png",
+  "model_java": "src/main/java/com/cheng/search_bot/client/model/SearchRobotModel.java",
+  "renderer_java": "src/main/java/com/cheng/search_bot/client/renderer/entity/SearchRobotRenderer.java",
+  "skins": {
+    "01_boxuv": {
+      "label": "01 模型（用户建模）+ box-UV 重排图集 —— 当前应该用这套",
+      "png": "01_boxuv/search_robot.png",
+      "model": "01_boxuv/SearchRobotModel.java",
+      "tex_size": [
+        128,
+        64
+      ],
+      "units_per_block": 16,
+      "renderer": "vanilla_flip",
+      "in_game": true,
+      "bbmodel": "D:/Blockbench/mcp/01_applied.bbmodel",
+      "gen": "D:/Blockbench/mcp/apply_01.py",
+      "notes": "UV 岛按 MC ModelPart.Cube 的浮点 box-UV 公式排；按面纯色，只有头部观察口是蓝的。01_applied.bbmodel 里每面 UV 与 MC 完全一致，Blockbench 看到的就是游戏效果。"
+    },
+    "hd_256": {
+      "label": "HD 重建模型（32 单位/格 + 渲染缩 0.5）的 256x256 贴图",
+      "png": "hd_256/search_robot.png",
+      "model": "hd_256/SearchRobotModel.java",
+      "tex_size": [
+        256,
+        256
+      ],
+      "units_per_block": 32,
+      "renderer": "no_flip_half_scale",
+      "in_game": true,
+      "bbmodel": "D:/Blockbench/mcp/search_robot_hd_painted.bbmodel",
+      "gen": "D:/Blockbench/mcp/build_robot_hd.py + paint_robot_hd.py + gen_java_hd.py",
+      "notes": "像素密度高，能画屏幕/铆钉这类细节；但几何是我按 01 重建的，不是用户那版。换回来必须同时换模型类 + 渲染器变换，两者是一套。"
+    },
+    "占位_64x32": {
+      "label": "最早的纯色占位图（64x32，7 月建的）",
+      "png": "占位_64x32/search_robot.png",
+      "model": null,
+      "tex_size": [
+        64,
+        32
+      ],
+      "units_per_block": 16,
+      "renderer": null,
+      "in_game": false,
+      "notes": "只是留个档，别用：整张是一个颜色，套任何模型都是一坨灰。"
+    },
+    "01_旧版任意UV": {
+      "label": "01 第一次上色的 128x64（按 Blockbench 任意面 UV 排的）",
+      "png": "01_旧版任意UV/search_robot.png",
+      "model": null,
+      "tex_size": [
+        128,
+        64
+      ],
+      "units_per_block": 16,
+      "renderer": null,
+      "in_game": false,
+      "notes": "MC 的实体模型只能表达 box-UV，这张图的 UV 是逐面自由排的，进游戏会串色 —— 只能在 Blockbench 里当配色参考。游戏用的版本是 01_boxuv。"
+    }
+  }
+}

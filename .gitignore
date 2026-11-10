@@ -1,0 +1,40 @@
+# eclipse
+bin
+*.launch
+.settings
+.metadata
+.classpath
+.project
+
+# idea
+out
+*.ipr
+*.iws
+*.iml
+.idea
+
+# gradle
+build
+.gradle
+
+# other
+eclipse
+run
+
+# Files from Forge MDK
+forge*changelog.txt
+
+# 本项目额外忽略（构建产物 / 日志 / 备份，不进 git）
+versions/
+_installer_backup/
+.ae2ref/
+*.log
+hs_err_pid*.log
+replay_pid*.log
+forge-mdk.zip
+
+# 运行/构建日志（.txt 结尾的日志文件）
+build_log*.txt
+client_run_log*.txt
+run_client_log*.txt
+client_run_v*.txt

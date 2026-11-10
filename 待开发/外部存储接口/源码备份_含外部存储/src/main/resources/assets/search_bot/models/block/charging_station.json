@@ -1,0 +1,6 @@
+﻿{
+    "textures":  {
+                     "all":  "search_bot:block/charging_station"
+                 },
+    "parent":  "minecraft:block/cube_all"
+}

@@ -1,0 +1,6 @@
+{
+    "textures": {
+        "layer0": "search_bot:item/stacking_card_ultimate"
+    },
+    "parent": "minecraft:item/generated"
+}

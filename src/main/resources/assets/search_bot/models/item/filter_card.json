@@ -1,0 +1,6 @@
+{
+    "textures": {
+        "layer0": "search_bot:item/filter_card"
+    },
+    "parent": "minecraft:item/generated"
+}

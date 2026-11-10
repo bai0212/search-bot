@@ -1,0 +1,6 @@
+﻿{
+    "textures":  {
+                     "all":  "search_bot:block/robot_assembler"
+                 },
+    "parent":  "minecraft:block/cube_all"
+}

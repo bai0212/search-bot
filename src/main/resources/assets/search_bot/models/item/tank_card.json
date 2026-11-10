@@ -1,0 +1,6 @@
+{
+    "textures": {
+        "layer0": "search_bot:item/tank_card"
+    },
+    "parent": "minecraft:item/generated"
+}

@@ -1,0 +1,6 @@
+﻿{
+    "textures":  {
+                     "layer0":  "search_bot:item/robot"
+                 },
+    "parent":  "minecraft:item/generated"
+}

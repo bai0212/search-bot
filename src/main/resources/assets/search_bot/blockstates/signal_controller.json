@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "search_bot:block/signal_controller" }
+  }
+}

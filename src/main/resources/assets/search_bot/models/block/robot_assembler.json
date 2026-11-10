@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "search_bot:block/robot_assembler",
+    "up": "search_bot:block/robot_assembler_top",
+    "north": "search_bot:block/robot_assembler",
+    "east": "search_bot:block/robot_assembler",
+    "south": "search_bot:block/robot_assembler",
+    "west": "search_bot:block/robot_assembler",
+    "particle": "search_bot:block/robot_assembler"
+  }
+}
