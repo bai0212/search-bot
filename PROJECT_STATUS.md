@@ -175,6 +175,70 @@ search_bot/                              # 模组根目录
 
 ## 6. 进度报告
 
+### 2026-11-11 —— 磁力卡性能优化 + 需求文档补全
+
+**磁力卡性能**：原磁力卡每 tick 都做一次实体范围查询（`getEntitiesOfClass(ItemEntity.class, AABB)`），机器人多了会卡。新增 `magnetCooldownTick` 冷却，改为每 5 tick（0.25 秒）扫一次，与收集模块节奏对齐，肉眼无感、性能下降。
+
+**需求文档**：`模组需求文档.md` 头部版本/日期更新、修正 4 处过时 checkbox、新增「## 13. 当前功能全貌」章节汇总当前全部功能。
+
+**修改文件清单**：
+
+| 文件 | 变更内容 |
+|------|----------|
+| `entity/custom/SearchRobotEntity.java` | 新增 `magnetCooldownTick` 字段，`tickMagnetPickup` 每 5 tick 才做一次范围查询（吸物半径仍固定 6 格） |
+| `模组需求文档.md` | 头部更新（v0.8.0 / 2026-11-11）、修正 checkbox、新增第 13 节功能全貌 |
+
+**验证状态**：
+- [x] BUILD SUCCESSFUL（仅既有 ResourceLocation 弃用警告）
+- [x] jar 归档 + 同步测试游戏 mods（403171 字节）
+- [ ] 进游戏验证：磁力卡吸物仍正常、多机器人不再卡
+
+---
+
+### 2026-11-11 —— 修复机器人仓库 GUI 三个 bug（滚动条只能往下 / GUI 重叠 / 过滤卡标记复制）
+
+**三个 bug 及根因**：
+1. **滚动条只能往下不能往上**：`repositionStorageSlots` 重建槽位时用了「已经被滚过的 baseY」继续减偏移，滚动偏移逐次累加、且 `-scrollRow*SLOT` 恒为负 → 槽位只会向上漂、永远回不到顶部。
+2. **GUI 重叠**：电量条文字和左侧「物品栏」标签挤在同一行重叠；GUI 贴图仍是旧 256×256，界面 320 宽导致 blit UV 越界。
+3. **过滤卡标记不能标记还复制物品**：过滤槽是幽灵槽但没禁止拾取（`mayPickup` 仍为 true），标记可能被当作真实物品拿走。
+
+**修改文件清单**：
+
+| 文件 | 变更内容 |
+|------|----------|
+| `menu/custom/RobotInventoryMenu.java` | `TabSlot` 增加不可变 `originY`，`repositionStorageSlots` 始终按 originY 计算显示位，修复滚动偏移累加；`FilterSlot` 增加 `mayPickup=false` 禁拾取幽灵标记 |
+| `client/screen/RobotInventoryScreen.java` | 电量条右对齐到储物区右缘（避免与「物品栏」文字重叠）；贴图 blit 宽度 clamp 到 256 防止 UV 越界 |
+
+**验证状态**：
+- [x] BUILD SUCCESSFUL（43s，仅既有 ResourceLocation 弃用警告）
+- [x] jar 重新归档 + 同步测试游戏 mods（403116 字节，mods 里只保留 0.8.0 一个 jar）
+- [ ] 进游戏验证：滚动条双向、GUI 无重叠、过滤卡标记正常且不复制
+
+---
+
+### 2026-11-10 —— 崩溃修复（高等级存储箱槽位越界）+ Git/GitHub 同步
+
+**崩溃修复**：v0.8.0 存储箱扩到终极 117 格后，装配台合并背包仍硬编码 90 格 → `Slot 90 not in valid range` 崩溃。3 处修复 + 重新编译同步。
+
+**Git 同步**：装 git 后从零搭版本管理并推到 GitHub（bai0212/search-bot）。
+
+**修改文件清单**：
+
+| 文件 | 变更内容 |
+|------|----------|
+| `block/entity/custom/RobotAssemblerBlockEntity.java` | 组装合并 `ItemStackHandler(90)` → `Math.max(1, inventorySize)`、循环上限 `< inventorySize`；拆解读档后 `setSize` 扩容兜底 |
+| `entity/custom/SearchRobotEntity.java` | `loadRobotData` 读档后若处理器 < `inventory_size` 则 `setSize` 扩容（救旧存档） |
+| `.gitignore` | 补充排除构建产物/日志/备份 |
+| （git 初始化） | `git init` + 首次提交 `4bf3518`（824 文件）+ 分支 main + 推送到 GitHub |
+
+**验证状态**：
+- [x] BUILD SUCCESSFUL（67s，仅既有 ResourceLocation 弃用警告）
+- [x] jar 重新归档 + 同步测试游戏 mods（403036 字节）
+- [x] git 仓库建立 + 推送到 GitHub（https://github.com/bai0212/search-bot）
+- [ ] 进游戏验证：打开之前崩溃的机器人仓库界面不再崩
+
+---
+
 ### 2026-11-10 —— v0.8.0（6 项新需求：JEI 拖动标记 / 磁力半径6 / 堆叠卡6档+NBT / 流体运输 / 存储9格每行+滚动条 / 卡槽左+顶部分页+右侧配置）
 
 用户 6 项新需求全部落地，版本 0.7.0 → **0.8.0**。

@@ -218,6 +218,9 @@ public class SearchRobotEntity extends PathfinderMob {
     // 收集物品独立模块的冷却计数器
     private int collectCooldownTick = 0;
 
+    // 磁力卡扫描冷却：每 5 tick（0.25 秒）扫一次，避免每 tick 都做实体范围查询
+    private int magnetCooldownTick = 0;
+
     // 传送装置瞬移冷却
     private int teleportCooldown = 0;
 
@@ -500,6 +503,12 @@ public class SearchRobotEntity extends PathfinderMob {
     /** 磁力卡：把机器人周围掉在地上的物品吸进背包（尊重过滤/销毁卡）。 */
     private void tickMagnetPickup() {
         if (!hasCard(ModItems.CARD_MAGNET)) return;
+        // 扫描冷却：每 5 tick 扫一次，避免每 tick 都做实体范围查询（性能优化，不影响手感）
+        if (magnetCooldownTick > 0) {
+            magnetCooldownTick--;
+            return;
+        }
+        magnetCooldownTick = 4;
         if (isInventoryFull()) return;
         // 磁力卡范围固定半径 6 格（不随传感器等级变化）
         int radius = 6;

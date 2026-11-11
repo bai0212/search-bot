@@ -69,7 +69,8 @@ public class RobotInventoryScreen extends AbstractContainerScreen<RobotInventory
     protected void renderBg(GuiGraphics g, float partialTick, int mouseX, int mouseY) {
         RenderSystem.setShaderColor(1, 1, 1, 1);
         g.fill(this.leftPos, this.topPos, this.leftPos + this.imageWidth, this.topPos + this.imageHeight, TechGuiTheme.BG);
-        g.blit(GUI_TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, Math.min(this.imageHeight, 256));
+        // 贴图目前是 256x256（旧尺寸），界面是 320 宽，UV 不能超过贴图边界，否则在部分显卡上会重复/拉伸。
+        g.blit(GUI_TEXTURE, this.leftPos, this.topPos, 0, 0, Math.min(this.imageWidth, 256), Math.min(this.imageHeight, 256));
         TechGuiTheme.panelFrame(g, this.leftPos, this.topPos, this.imageWidth, this.imageHeight);
 
         drawCardTabBar(g, mouseX, mouseY);
@@ -426,10 +427,11 @@ public class RobotInventoryScreen extends AbstractContainerScreen<RobotInventory
     private void drawEnergyBar(GuiGraphics graphics) {
         int energy = this.menu.getEnergy();
         int maxEnergy = Math.max(1, this.menu.getMaxEnergy());
-        int barX = RobotInventoryMenu.STORAGE_X + 82;
-        int barY = this.inventoryLabelY;
         int barWidth = 52;
         int barHeight = 6;
+        // 右对齐到储物区右缘，避免和左侧「物品栏」标签的文字重叠
+        int barX = RobotInventoryMenu.STORAGE_X + RobotInventoryMenu.STORAGE_COLS * RobotInventoryMenu.SLOT - 6 - barWidth;
+        int barY = this.inventoryLabelY;
 
         String energyText = compactEnergy(energy) + "/" + compactEnergy(maxEnergy);
         graphics.drawString(this.font, energyText, barX - 4 - this.font.width(energyText), barY, TechGuiTheme.LABEL, false);

@@ -245,7 +245,7 @@ public class RobotInventoryMenu extends AbstractContainerMenu {
                 int col = r % STORAGE_COLS;
                 int row = r / STORAGE_COLS;
                 TabSlot s = new TabSlot(this.itemHandler, base + r,
-                        STORAGE_X + col * SLOT, STORAGE_Y + row * SLOT, box, this::getCurrentTab);
+                        STORAGE_X + col * SLOT, STORAGE_Y + row * SLOT, STORAGE_Y + row * SLOT, box, this::getCurrentTab);
                 this.addSlot(s);
                 this.tabSlots.add(s);
             }
@@ -343,12 +343,12 @@ public class RobotInventoryMenu extends AbstractContainerMenu {
     /** 只渲染当前分页、且在可视行数内的储物槽位 */
     private static class TabSlot extends SlotItemHandler {
         private final int tab;
-        private final int baseY;
+        private final int originY;      // 未滚动时的原始 y（永不改变，滚动偏移都基于它计算）
         private final IntSupplier currentTab;
 
-        TabSlot(IItemHandler handler, int handlerIndex, int x, int y, int tab, IntSupplier currentTab) {
-            super(handler, handlerIndex, x, y);
-            this.baseY = y;
+        TabSlot(IItemHandler handler, int handlerIndex, int x, int originY, int displayY, int tab, IntSupplier currentTab) {
+            super(handler, handlerIndex, x, displayY);
+            this.originY = originY;
             this.tab = tab;
             this.currentTab = currentTab;
         }
@@ -403,6 +403,11 @@ public class RobotInventoryMenu extends AbstractContainerMenu {
         @Override
         public boolean mayPlace(ItemStack stack) {
             return false; // 不接收真实物品；标记走网络包，不经过普通放置逻辑
+        }
+
+        @Override
+        public boolean mayPickup(Player player) {
+            return false; // 幽灵标记不可被当作真实物品拾取，避免「标记被拿走/复制」
         }
     }
 
@@ -610,8 +615,9 @@ public class RobotInventoryMenu extends AbstractContainerMenu {
     private void repositionStorageSlots() {
         for (int i = 0; i < tabSlots.size(); i++) {
             TabSlot old = tabSlots.get(i);
+            // 关键：始终用「未滚动的 originY」计算显示位置，避免滚动偏移逐次累加导致槽位越滚越偏、无法回顶。
             TabSlot fresh = new TabSlot(old.getItemHandler(), old.getSlotIndex(), old.x,
-                    old.baseY - scrollRow * SLOT, old.tab, old.currentTab);
+                    old.originY, old.originY - scrollRow * SLOT, old.tab, old.currentTab);
             ((Slot) fresh).index = ((Slot) old).index;
             tabSlots.set(i, fresh);
             this.slots.set(((Slot) old).index, fresh);
